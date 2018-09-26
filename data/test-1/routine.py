@@ -13,7 +13,7 @@ def routineSpecific(time):
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     gluPerspective(90,1,0.01,1000)
-    gluLookAt(sin(2*time/260.0)*4,cos(time/260.0)*4,cos(time/687.0)*3,0,0,0,0,1,0)
+    gluLookAt(sin(2*time/26000.0)*4,cos(time/26000.0)*4,cos(time/68700.0)*3,0,0,0,0,1,0)
     
     glClearColor(0.0, 0.0, 0.0, 1.0)
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
@@ -22,7 +22,7 @@ def routineSpecific(time):
 
     # calculate light source position
 
-    ld=[sin(time/16.0)*4.0,sin(time/20.0)*4.0,cos(time/16.0)*4.0]
+    ld=[sin(time/1600.0)*4.0,sin(time/2000.0)*4.0,cos(time/1600.0)*4.0]
 
     # pass data to fragment shader
 
@@ -34,12 +34,13 @@ def routineSpecific(time):
 
     glLoadIdentity()
     # render a pretty range of cubes
-    
-    for i in range(-10,10):
-        for j in range(-10,10):
-            for k in range(-5,5):
-                glPushMatrix()
-                glTranslate(i,j,k)
-                glScale(0.1,0.1,0.1)
-                glCallList(1)
-                glPopMatrix()
+    num = round(10*sin(time/1e3)**4)
+    for i in range(-num,num+1):
+        for j in range(-num,num+1):
+            for k in range(-num,num+1):      
+                if k==j:          
+                    glPushMatrix()
+                    glTranslate(i,j,k)
+                    glScale(0.1,0.1,0.1)
+                    glCallList(1)
+                    glPopMatrix()

@@ -28,11 +28,11 @@ def start():
 
     glEnable(GL_DEPTH_TEST)
 
-def run():
+def run(folder):
     start()
-    buildAndUseProgram(dataDir+'shader-1.vs', dataDir+'shader-1.fs')
+    buildAndUseProgram(folder+'shader.vs', folder+'shader.fs')
     loadCube(1)
-    routineLib=loadRoutineLib(dataDir+'routine-1', onlyIfLibUpdated=False)
+    routineLib=loadRoutineLib(folder+'routine', onlyIfLibUpdated=False)
 
     done = False
 
@@ -46,19 +46,19 @@ def run():
                 done = True
                 pygame.display.quit()
         if t-lastUpdate > 30:
-            buildAndUseProgram(dataDir+'shader-1.vs', dataDir+'shader-1.fs', True)
-            if isRoutineNew(dataDir+'routine-1'):
+            buildAndUseProgram(folder+'shader.vs', folder+'shader.fs', True)
+            if isRoutineNew(folder+'routine'):
                 print('Load routine')               
-                routineLib=loadRoutineLib(dataDir+'routine-1', onlyIfLibUpdated=True)
+                routineLib=loadRoutineLib(folder+'routine', onlyIfLibUpdated=True)
                 importlib.reload(routineLib)
             lastUpdate=t
 
         t=t+1
 
-        routineLib.routineSpecific(t)
+        routineLib.routineSpecific(pygame.time.get_ticks())
 
         pygame.display.flip()
         time.sleep(2e-3)
 
 if __name__=="__main__":
-    run()
+    run(dataDir+'test-1/')
