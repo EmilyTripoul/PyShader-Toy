@@ -13,7 +13,7 @@ def routineSpecific(time):
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     gluPerspective(90,1,0.01,1000)
-    gluLookAt(sin(time/260.0)*4,cos(time/260.0)*4,cos(time/687.0)*3,0,0,0,0,1,0)
+    gluLookAt(sin(2*time/260.0)*4,cos(time/260.0)*4,cos(time/687.0)*3,0,0,0,0,1,0)
     
     glClearColor(0.0, 0.0, 0.0, 1.0)
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
@@ -35,11 +35,11 @@ def routineSpecific(time):
     glLoadIdentity()
     # render a pretty range of cubes
     
-    for i in range(-5,5):
-        for j in range(-5,5):
+    for i in range(-10,10):
+        for j in range(-10,10):
             for k in range(-5,5):
                 glPushMatrix()
                 glTranslate(i,j,k)
-                glScale(0.2,0.1,0.1)
+                glScale(0.1,0.1,0.1)
                 glCallList(1)
                 glPopMatrix()

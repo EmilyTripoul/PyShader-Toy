@@ -8,6 +8,7 @@ Created on Thu Sep 20 2018
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import hashlib
+import importlib
 
 def createAndCompileShader(type,source):
     shader=glCreateShader(type)
@@ -116,16 +117,18 @@ def loadCube(listId=1):
 _lastSeenShaderRoutineHash=''
 
 def isRoutineNew(routineFile):
-    with open(routineFile) as f:
+    with open(routineFile+'.py') as f:
         content=f.read()
         newHash=hashlib.md5(content.encode('utf-8')).hexdigest()
         return newHash!=_lastSeenShaderRoutineHash
 
 def loadRoutineLib(routineFile, onlyIfLibUpdated=False):
-    with open(routineFile) as f:
+    global _lastSeenShaderRoutineHash
+    with open(routineFile+'.py') as f:
         content=f.read()
         newHash=hashlib.md5(content.encode('utf-8')).hexdigest()
-        _lastSeenShaderRoutineHash
-        return importlib.import_module(routineFile.replace('/', '.'))
+        if (not onlyIfLibUpdated) or newHash!=_lastSeenShaderRoutineHash:
+            _lastSeenShaderRoutineHash=newHash
+            return importlib.import_module(routineFile.replace('/', '.'))
     return None
 
